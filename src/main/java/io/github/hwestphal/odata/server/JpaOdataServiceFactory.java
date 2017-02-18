@@ -8,20 +8,20 @@ import org.apache.olingo.odata2.jpa.processor.api.exception.ODataJPARuntimeExcep
 
 class JpaOdataServiceFactory extends ODataJPAServiceFactory {
 
-	private final EntityManagerFactory entityManagerFactory;
-	private final String namespace;
+    private final EntityManagerFactory entityManagerFactory;
+    private final String namespace;
 
-	JpaOdataServiceFactory(EntityManagerFactory entityManagerFactory, String namespace) {
-		this.entityManagerFactory = entityManagerFactory;
-		this.namespace = namespace;
-	}
+    JpaOdataServiceFactory(EntityManagerFactory entityManagerFactory, String namespace) {
+	this.entityManagerFactory = entityManagerFactory;
+	this.namespace = namespace;
+    }
 
-	@Override
-	public ODataJPAContext initializeODataJPAContext() throws ODataJPARuntimeException {
-		ODataJPAContext context = getODataJPAContext();
-		context.setEntityManagerFactory(entityManagerFactory);
-		context.setPersistenceUnitName(namespace);
-		return context;
-	}
+    @Override
+    public ODataJPAContext initializeODataJPAContext() throws ODataJPARuntimeException {
+	ODataJPAContext context = getODataJPAContext();
+	context.setEntityManagerFactory(entityManagerFactory);
+	context.setPersistenceUnitName(namespace);
+	return context;
+    }
 
 }

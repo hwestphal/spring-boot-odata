@@ -16,35 +16,35 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 class DeferredDeserializer extends JsonDeserializer<Optional<?>> implements ContextualDeserializer {
 
-	private final ObjectMapper mapper;
-	private final JavaType targetType;
+    private final ObjectMapper mapper;
+    private final JavaType targetType;
 
-	DeferredDeserializer(ObjectMapper mapper) {
-		this(mapper, null);
-	}
+    DeferredDeserializer(ObjectMapper mapper) {
+	this(mapper, null);
+    }
 
-	private DeferredDeserializer(ObjectMapper mapper, JavaType targetType) {
-		this.mapper = mapper;
-		this.targetType = targetType;
-	}
+    private DeferredDeserializer(ObjectMapper mapper, JavaType targetType) {
+	this.mapper = mapper;
+	this.targetType = targetType;
+    }
 
-	@Override
-	public Optional<?> deserialize(JsonParser p, DeserializationContext context)
-			throws IOException, JsonProcessingException {
-		ObjectNode node = p.readValueAsTree();
-		if (node.has("__deferred")) {
-			return Optional.empty();
-		}
-		if (targetType.isCollectionLikeType()) {
-			return Optional.of(mapper.convertValue(node.get("results"), targetType));
-		}
-		return Optional.of(mapper.convertValue(node, targetType));
+    @Override
+    public Optional<?> deserialize(JsonParser p, DeserializationContext context)
+	    throws IOException, JsonProcessingException {
+	ObjectNode node = p.readValueAsTree();
+	if (node.has("__deferred")) {
+	    return Optional.empty();
 	}
+	if (targetType.isCollectionLikeType()) {
+	    return Optional.of(mapper.convertValue(node.get("results"), targetType));
+	}
+	return Optional.of(mapper.convertValue(node, targetType));
+    }
 
-	@Override
-	public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property)
-			throws JsonMappingException {
-		return new DeferredDeserializer(mapper, property.getType().containedType(0));
-	}
+    @Override
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property)
+	    throws JsonMappingException {
+	return new DeferredDeserializer(mapper, property.getType().containedType(0));
+    }
 
 }

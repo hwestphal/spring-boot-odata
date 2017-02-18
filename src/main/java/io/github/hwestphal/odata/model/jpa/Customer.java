@@ -22,82 +22,82 @@ import io.github.hwestphal.odata.server.CustomJpaQueryBuilder;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "code", name = "CUSTOMER_UK"))
 public class Customer {
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@Column(nullable = false)
-	private String code;
+    @Column(nullable = false)
+    private String code;
 
-	private String name;
+    private String name;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-	private Set<Product> products = new HashSet<Product>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private Set<Product> products = new HashSet<Product>();
 
-	Customer() {
+    Customer() {
+    }
+
+    public Customer(String code) {
+	this.code = Objects.requireNonNull(code, "code must not be null");
+    }
+
+    public Long getId() {
+	return id;
+    }
+
+    public String getCode() {
+	return code;
+    }
+
+    public String getName() {
+	return name;
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    public Set<Product> getProducts() {
+	return Collections.unmodifiableSet(products);
+    }
+
+    public boolean addProduct(Product product) {
+	product.setCustomer(this);
+	return products.add(product);
+    }
+
+    public boolean removeProduct(Product product) {
+	return products.remove(product);
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((code == null) ? 0 : code.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
 	}
-
-	public Customer(String code) {
-		this.code = Objects.requireNonNull(code, "code must not be null");
+	if (obj == null) {
+	    return false;
 	}
-
-	public Long getId() {
-		return id;
+	if (getClass() != obj.getClass()) {
+	    return false;
 	}
-
-	public String getCode() {
-		return code;
+	Customer other = (Customer) obj;
+	if (code == null) {
+	    if (other.code != null) {
+		return false;
+	    }
+	} else if (!code.equals(other.code)) {
+	    return false;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Set<Product> getProducts() {
-		return Collections.unmodifiableSet(products);
-	}
-
-	public boolean addProduct(Product product) {
-		product.setCustomer(this);
-		return products.add(product);
-	}
-
-	public boolean removeProduct(Product product) {
-		return products.remove(product);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((code == null) ? 0 : code.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Customer other = (Customer) obj;
-		if (code == null) {
-			if (other.code != null) {
-				return false;
-			}
-		} else if (!code.equals(other.code)) {
-			return false;
-		}
-		return true;
-	}
+	return true;
+    }
 
 }

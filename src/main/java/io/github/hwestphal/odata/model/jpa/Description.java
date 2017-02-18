@@ -5,23 +5,23 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Description {
 
-	private String name;
-	private String producer;
+    private String name;
+    private String producer;
 
-	Description() {
-	}
+    Description() {
+    }
 
-	public Description(String name, String producer) {
-		this.name = name;
-		this.producer = producer;
-	}
+    public Description(String name, String producer) {
+	this.name = name;
+	this.producer = producer;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public String getProducer() {
-		return producer;
-	}
+    public String getProducer() {
+	return producer;
+    }
 
 }

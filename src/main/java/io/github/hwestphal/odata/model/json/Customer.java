@@ -10,34 +10,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Customer {
 
-	private final long id;
-	private final String code;
-	private final String name;
-	private final Optional<Collection<Product>> products;
+    private final long id;
+    private final String code;
+    private final String name;
+    private final Optional<Collection<Product>> products;
 
-	@JsonCreator
-	public Customer(@JsonProperty("Id") long id, @JsonProperty("Code") String code, @JsonProperty("Name") String name,
-			@JsonProperty("ProductDetails") Optional<Collection<Product>> products) {
-		this.id = id;
-		this.code = code;
-		this.name = name;
-		this.products = products;
-	}
+    @JsonCreator
+    public Customer(@JsonProperty("Id") long id, @JsonProperty("Code") String code, @JsonProperty("Name") String name,
+	    @JsonProperty("ProductDetails") Optional<Collection<Product>> products) {
+	this.id = id;
+	this.code = code;
+	this.name = name;
+	this.products = products;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+	return id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+	return code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public Optional<Collection<Product>> getProducts() {
-		return products;
-	}
+    public Optional<Collection<Product>> getProducts() {
+	return products;
+    }
 
 }

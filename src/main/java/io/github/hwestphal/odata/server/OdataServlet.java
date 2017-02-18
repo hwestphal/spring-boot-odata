@@ -11,22 +11,22 @@ import org.apache.olingo.odata2.core.servlet.ODataServlet;
 
 class OdataServlet extends ODataServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final ODataServiceFactory serviceFactory;
+    private final ODataServiceFactory serviceFactory;
 
-	OdataServlet(ODataServiceFactory serviceFactory) {
-		this.serviceFactory = serviceFactory;
+    OdataServlet(ODataServiceFactory serviceFactory) {
+	this.serviceFactory = serviceFactory;
+    }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	if (!ODataHttpMethod.GET.name().equals(req.getMethod())) {
+	    res.sendError(HttpServletResponse.SC_BAD_REQUEST);
+	    return;
 	}
-
-	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		if (!ODataHttpMethod.GET.name().equals(req.getMethod())) {
-			res.sendError(HttpServletResponse.SC_BAD_REQUEST);
-			return;
-		}
-		req.setAttribute(ODataServiceFactory.FACTORY_INSTANCE_LABEL, serviceFactory);
-		super.service(req, res);
-	}
+	req.setAttribute(ODataServiceFactory.FACTORY_INSTANCE_LABEL, serviceFactory);
+	super.service(req, res);
+    }
 
 }

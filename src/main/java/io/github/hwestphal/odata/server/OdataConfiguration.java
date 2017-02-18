@@ -10,16 +10,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OdataConfiguration {
 
-	public static final String NAMESPACE = "Spring_Boot_OData";
-	public static final String SERVICE_URL = "/odata/v2/";
+    public static final String NAMESPACE = "Spring_Boot_OData";
+    public static final String SERVICE_URL = "/odata/v2/";
 
-	@Autowired
-	private EntityManagerFactory entityManagerFactory;
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
-	@Bean
-	ServletRegistrationBean odataServlet() {
-		return new ServletRegistrationBean(
-				new OdataServlet(new JpaOdataServiceFactory(entityManagerFactory, NAMESPACE)), SERVICE_URL + "*");
-	}
+    @Bean
+    ServletRegistrationBean odataServlet() {
+	return new ServletRegistrationBean(
+		new OdataServlet(new JpaOdataServiceFactory(entityManagerFactory, NAMESPACE)), SERVICE_URL + "*");
+    }
 
 }
